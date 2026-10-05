@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Naruto - Shinobi Destiny</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#070a10;color:#fff}
+button,input,select{font:inherit}
+button{border:0;border-radius:12px;padding:12px;margin:4px 0;cursor:pointer;background:#2563eb;color:#fff}
+button:active{transform:scale(.98)}
+input,select{width:100%;background:#101827;color:#fff;border:1px solid #334155;border-radius:10px;padding:12px;margin:5px 0 10px}
+.hidden{display:none!important}
+.phone{width:min(520px,100%);min-height:100vh;margin:auto;background:#080d16;padding-bottom:80px}
+.header{position:sticky;top:0;z-index:20;background:#0b111d;border-bottom:1px solid #273449;padding:13px}
+.headerRow{display:flex;justify-content:space-between;align-items:center}
+.screen{min-height:100vh;padding:15px}
+.card{background:#111827;border:1px solid #263244;border-radius:18px;padding:15px;margin-bottom:12px}
+h1{font-size:28px;margin-bottom:10px}h2{margin-bottom:10px}h3{margin-bottom:8px}
+.small{font-size:12px;color:#94a3b8}.center{text-align:center}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.stat{background:#0b1220;border-radius:12px;padding:10px;text-align:center}
+.stat b{display:block;font-size:19px}
+.badge{display:inline-block;background:#263244;padding:5px 8px;border-radius:8px;font-size:11px;margin:2px}
+.progress{height:8px;background:#1e293b;border-radius:8px;overflow:hidden;margin:4px 0 10px}
+.progress span{display:block;height:100%;background:#3b82f6}
+.event{background:#0c1422;border-left:4px solid #3b82f6;padding:11px;border-radius:8px;margin:7px 0}
+.choice{width:100%;text-align:left;background:#162033}.choice:hover{background:#1e3150}
+.danger{background:#991b1b}.success{background:#15803d}.warning{background:#b45309}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);background:#0b111d;border-top:1px solid #273449;display:grid;grid-template-columns:repeat(5,1fr);z-index:30}
+.bottom button{background:transparent;font-size:11px;margin:0;padding:8px 2px}
+.dialogue{background:#101827;border-radius:16px;padding:15px;margin-bottom:10px}
+.dialogueName{font-weight:bold;color:#60a5fa;margin-bottom:8px}
+.log{max-height:350px;overflow:auto}
+.death{background:#1c0b0b;border:1px solid #7f1d1d}
+.sharingan{font-size:28px}
+.legacy{border-left:4px solid #eab308;padding:10px;background:#15120a;margin:7px 0}
+</style>
+</head>
+<body>
+
+<div id="creation" class="screen">
+<div class="phone">
+<div class="card center">
+<h1>🍥 NARUTO</h1><h2>SHINOBI DESTINY</h2>
+<p class="small">Une vie entière dans le monde ninja. Tes décisions construisent ton histoire.</p>
+</div>
+
+<div class="card"><h2>👤 Ton personnage</h2>
+<label>Prénom</label><input id="firstName" placeholder="Ex : Ren">
+<label>Nom</label><input id="lastName" placeholder="Ex : Uchiha">
+<label>Sexe</label><select id="gender"><option>Garçon</option><option>Fille</option></select>
+<label>Âge de départ</label><select id="startAge">
+<option value="6">6 ans</option><option value="7">7 ans</option><option value="8" selected>8 ans</option>
+<option value="9">9 ans</option><option value="10">10 ans</option><option value="12">12 ans</option><option value="14">14 ans</option>
+</select></div>
+
+<div class="card"><h2>🧬 Clan</h2>
+<select id="clan">
+<option value="none">Aucun clan</option><option value="uchiha">Uchiha</option><option value="hyuga">Hyūga</option>
+<option value="uzumaki">Uzumaki</option><option value="nara">Nara</option><option value="akimichi">Akimichi</option>
+<option value="yamanaka">Yamanaka</option><option value="aburame">Aburame</option><option value="inuzuka">Inuzuka</option>
+<option value="hatake">Hatake</option><option value="custom">Clan inventé</option></select>
+<input id="customClan" class="hidden" placeholder="Nom de ton clan">
+</div>
+
+<div class="card"><h2>🏠 Famille</h2>
+<select id="family"><option>Famille ninja</option><option>Famille riche</option><option>Famille normale</option>
+<option>Famille pauvre</option><option>Famille civile</option><option>Orphelin</option></select></div>
+
+<div class="card"><h2>🏯 Village</h2>
+<select id="village"><option>Konoha</option><option>Suna</option><option>Kiri</option><option>Kumo</option>
+<option>Iwa</option><option>Village mineur</option><option>Déserteur</option></select></div>
+
+<div class="card"><h2>🌪️ Affinité chakra</h2>
+<select id="element"><option>Katon 🔥</option><option>Suiton 💧</option><option>Fūton 🌪️</option>
+<option>Raiton ⚡</option><option>Doton 🪨</option><option>Aléatoire</option></select>
+<h2>🥋 Spécialité</h2>
+<select id="speciality"><option>Taijutsu</option><option>Ninjutsu</option><option>Genjutsu</option>
+<option>Kenjutsu</option><option>Fuinjutsu</option><option>Médecine</option></select></div>
+
+<button style="width:100%;font-size:18px" onclick="startGame()">🚀 Commencer ma vie de shinobi</button>
+</div></div>
+
+<div id="game" class="hidden">
+<div class="phone">
+<header class="header"><div class="headerRow">
+<div><b id="headerName">Ninja</b><div class="small" id="headerVillage">Village</div></div>
+<div class="center"><b id="headerAge">8 ans</b><div class="small">Année <span id="headerYear">1</span></div></div>
+</div></header>
+<main id="content"></main>
+<div class="bottom">
+<button onclick="showPage('home')">🏠<br>Accueil</button>
+<button onclick="showPage('choices')">🎯<br>Choix</button>
+<button onclick="showPage('relations')">❤️<br>Relations</button>
+<button onclick="showPage('world')">🌍<br>Monde</button>
+<button onclick="showPage('more')">☰<br>Plus</button>
+</div></div></div>
+
+<script>
+"use strict";
+let game=null;
+
+const CHARACTERS={
+Naruto:{village:"Konoha",age:8,power:45},Sasuke:{village:"Konoha",age:8,power:52},
+Sakura:{village:"Konoha",age:8,power:30},Kakashi:{village:"Konoha",age:26,power:85},
+Shikamaru:{village:"Konoha",age:8,power:48},Hinata:{village:"Konoha",age:8,power:40},
+Gaara:{village:"Suna",age:10,power:65},Itachi:{village:"Konoha",age:13,power:80},
+Orochimaru:{village:"Konoha",age:35,power:90},Jiraiya:{village:"Konoha",age:45,power:95},
+Boruto:{village:"Konoha",age:12,power:60},Sarada:{village:"Konoha",age:12,power:62},
+Mitsuki:{village:"Konoha",age:12,power:65},Kawaki:{village:"Konoha",age:14,power:68}
+};
+
+function random(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+function chance(p){return Math.random()*100<p}
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function uid(p){return p+"_"+Date.now()+"_"+Math.random().toString(36).slice(2)}
+function playerName(){return game.player.firstName+" "+game.player.lastName}
+function esc(v){return String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}
+
+function createState(){return{
+version:2,player:null,age:8,era:"Naruto",year:1,actions:0,alive:true,village:"Konoha",
+clan:"Aucun",family:"Famille normale",element:"Katon 🔥",speciality:"Ninjutsu",
+stats:{chakra:50,strength:40,speed:40,intelligence:50,ninjutsu:40,taijutsu:40,genjutsu:30,stamina:45,control:40,reputation:5,wanted:0},
+abilities:{sharingan:0,byakugan:false,sage:false,mangekyo:false,rinnegan:false},
+relations:{Naruto:50,Sasuke:50,Sakura:50,Kakashi:50,Shikamaru:50,Hinata:50,Gaara:30,Itachi:20,Orochimaru:10,Jiraiya:30,Boruto:50,Sarada:50,Mitsuki:50,Kawaki:30},
+rivals:[],friends:[],enemies:[],missions:[],inventory:[],crimes:[],choices:[],events:[],news:[],dialogue:null,
+social:{followers:0,reputation:0},familyData:{parentsAlive:true,siblings:random(0,3),spouse:null,children:[]},
+timeline:{majorEvents:[],war:false,akatsuki:false,shinju:false},legacy:{titles:[],battles:0,missions:0,kills:0,victories:0},
+ui:{page:"home"}
+}}
+
+document.getElementById("clan").addEventListener("change",function(){
+document.getElementById("customClan").classList.toggle("hidden",this.value!=="custom")
+});
+
+function startGame(){
+const first=document.getElementById("firstName").value.trim(),last=document.getElementById("lastName").value.trim();
+if(!first||!last){alert("Entre un prénom et un nom.");return}
+game=createState();
+game.player={id:uid("player"),firstName:first,lastName:last,gender:document.getElementById("gender").value};
+game.age=Number(document.getElementById("startAge").value);
+const c=document.getElementById("clan").value;
+game.clan=c==="custom"?document.getElementById("customClan").value.trim()||"Clan inconnu":
+c==="uchiha"?"Uchiha":c==="hyuga"?"Hyūga":c==="uzumaki"?"Uzumaki":c==="nara"?"Nara":c==="akimichi"?"Akimichi":
+c==="yamanaka"?"Yamanaka":c==="aburame"?"Aburame":c==="inuzuka"?"Inuzuka":c==="hatake"?"Hatake":"Aucun";
+game.family=document.getElementById("family").value;game.village=document.getElementById("village").value;
+game.element=document.getElementById("element").value;
+if(game.element==="Aléatoire")game.element=pick(["Katon 🔥","Suiton 💧","Fūton 🌪️","Raiton ⚡","Doton 🪨"]);
+game.speciality=document.getElementById("speciality").value;
+applyClanBonuses();generateStartingEvents();checkRank();save();
+document.getElementById("creation").classList.add("hidden");document.getElementById("game").classList.remove("hidden");render();
+}
+
+function applyClanBonuses(){
+if(game.clan==="Uchiha"){game.stats.intelligence+=8;game.stats.chakra+=5;game.stats.genjutsu+=10}
+if(game.clan==="Hyūga"){game.stats.control+=12;game.stats.taijutsu+=8}
+if(game.clan==="Uzumaki"){game.stats.chakra+=20;game.stats.stamina+=20;game.stats.control+=5}
+if(game.clan==="Nara"){game.stats.intelligence+=20;game.stats.control+=5}
+if(game.clan==="Akimichi"){game.stats.strength+=15;game.stats.stamina+=15}
+if(game.clan==="Yamanaka"){game.stats.genjutsu+=12;game.stats.intelligence+=12}
+if(game.clan==="Aburame"){game.stats.control+=12;game.stats.chakra+=8}
+if(game.clan==="Inuzuka"){game.stats.speed+=10;game.stats.stamina+=10}
+if(game.clan==="Hatake"){game.stats.speed+=8;game.stats.intelligence+=10;game.stats.ninjutsu+=8}
+}
+
+function generateStartingEvents(){
+game.events.push({id:uid("event"),title:"Le début",text:`${playerName()} commence sa vie de shinobi à ${game.age} ans.`,type:"story"});
+if(game.clan==="Uchiha")game.events.push({id:uid("event"),title:"Le sang Uchiha",text:"Ton clan possède un potentiel héréditaire exceptionnel.",type:"clan"});
+if(game.family==="Orphelin")game.events.push({id:uid("event"),title:"Seul",text:"Tu dois apprendre très jeune à compter sur toi-même.",type:"family"});
+}
+
+function getChoices(){return[
+{title:"🥋 Entraînement physique",text:"Tu consacres du temps à ton corps.",action:()=>{game.stats.strength+=random(2,5);game.stats.speed+=random(1,4);game.stats.stamina+=random(2,5)}},
+{title:"🌀 Entraînement chakra",text:"Tu travailles ton contrôle du chakra.",action:()=>{game.stats.chakra+=random(3,7);game.stats.control+=random(2,6)}},
+{title:"📚 Étudier",text:"Tu étudies les techniques et stratégies.",action:()=>{game.stats.intelligence+=random(3,7);game.stats.ninjutsu+=random(1,4)}},
+{title:"👥 Passer du temps avec quelqu'un",text:"Tu renforces une relation.",action:()=>improveRandomRelation()},
+{title:"🏠 Famille",text:"Tu passes du temps avec ta famille.",action:()=>{game.stats.reputation++;}},
+{title:"🎯 Mission",text:"Tu acceptes une mission.",action:()=>mission()},
+{title:"⚔️ Combattre un rival",text:"Tu cherches volontairement un adversaire.",action:()=>rivalFight()},
+{title:"🧘 Méditation",text:"Tu travailles ta concentration.",action:()=>{game.stats.control+=random(2,5);game.stats.intelligence+=random(1,3)}}
+]}
+
+function chooseAction(i){
+if(!game.alive)return;const c=getChoices()[i];if(!c)return;c.action();game.actions++;
+game.choices.push({age:game.age,choice:c.title});addEvent(c.title,c.text);
+if(game.actions>=5){game.actions=0;advanceYear()}else checkRandomEvent();
+save();render();
+}
+
+function advanceYear(){
+game.age++;game.year++;ageCharacters();updateEra();checkSharingan();checkByakugan();checkRank();checkMajorEvents();
+worldSimulation();familySimulation();recoverStats();
+if(game.age>=90){die("vieillesse");return}
+if(chance(1+game.stats.wanted/30))criminalEvent();
+addEvent("🎂 Nouvelle année",`${playerName()} a maintenant ${game.age} ans.`);
+}
+
+function ageCharacters(){Object.keys(CHARACTERS).forEach(n=>CHARACTERS[n].age++)}
+function updateEra(){game.era=game.age<13?"Naruto":game.age<18?"Shippuden":"Boruto"}
+
+function checkSharingan(){
+if(game.clan!=="Uchiha")return;
+const emotional=game.enemies.length+game.rivals.length+game.legacy.battles,training=game.stats.intelligence+game.stats.genjutsu+game.stats.control;
+if(game.abilities.sharingan===0&&game.age>=10&&training>145&&emotional>=2&&chance(30)){game.abilities.sharingan=1;addEvent("👁️ SHARINGAN","Ton premier tomoe apparaît.");return}
+if(game.abilities.sharingan===1&&game.age>=12&&training>190&&chance(35)){game.abilities.sharingan=2;addEvent("👁️👁️ SHARINGAN","Ton Sharingan évolue à deux tomoe.");return}
+if(game.abilities.sharingan===2&&game.age>=14&&training>240&&chance(40)){game.abilities.sharingan=3;addEvent("👁️👁️👁️ SHARINGAN","Ton Sharingan atteint trois tomoe.")}
+checkMangekyo();
+}
+
+function checkMangekyo(){
+if(game.clan!=="Uchiha"||game.abilities.sharingan<3||game.abilities.mangekyo)return;
+const trauma=game.enemies.length+game.legacy.kills+game.timeline.majorEvents.length;
+if(game.age>=15&&trauma>=5&&chance(20)){game.abilities.mangekyo=true;addEvent("👁️ MANGEKYŌ","Un événement extrêmement violent déclenche une évolution de ton dōjutsu.")}
+}
+
+function checkByakugan(){
+if(game.clan!=="Hyūga")return;
+if(game.age>=10&&game.stats.control>100&&!game.abilities.byakugan&&chance(50)){game.abilities.byakugan=true;addEvent("👁️ BYAKUGAN","Ton Byakugan s'éveille.")}
+}
+
+function checkRank(){
+game.player.rank=game.age<10?"Étudiant":game.age<13?"Genin":game.age<17?"Chūnin":game.age<25?"Jōnin":"Jōnin d'élite";
+}
+
+function improveRandomRelation(){const n=pick(Object.keys(game.relations));game.relations[n]=Math.min(100,game.relations[n]+random(3,9));addEvent("❤️ Relation",`Ta relation avec ${n} s'améliore.`)}
+function changeRelation(n,v){if(n in game.relations)game.relations[n]=Math.max(0,Math.min(100,game.relations[n]+v))}
+function startRivalry(n){if(!game.rivals.includes(n)){game.rivals.push(n);addEvent("⚔️ Rivalité",`${n} devient un rival important.`)}}
+
+function startDialogue(character){
+const r=game.relations[character]||50;let d;
+if(character==="Naruto")d={character:"Naruto",text:r>70?"« Tu viens t'entraîner avec moi ? »":"« Tu viens t'entraîner ou quoi ? »",choices:[
+{text:"« Oui, allons-y ! »",effect:()=>changeRelation("Naruto",8)},{text:"« Pas aujourd'hui. »",effect:()=>changeRelation("Naruto",-2)},
+{text:"« Je vais te battre. »",effect:()=>{changeRelation("Naruto",4);startRivalry("Naruto")}}]};
+else if(character==="Sasuke")d={character:"Sasuke",text:r>60?"« Tu progresses. Montre-moi ce que tu sais faire. »":"« Ne me ralentis pas. »",choices:[
+{text:"« Je vais te dépasser. »",effect:()=>{changeRelation("Sasuke",5);startRivalry("Sasuke")}},
+{text:"« On peut progresser ensemble. »",effect:()=>changeRelation("Sasuke",8)},
+{text:"« Je n'ai rien à te prouver. »",effect:()=>changeRelation("Sasuke",-5)}]};
+else if(character==="Kakashi")d={character:"Kakashi",text:"« Un ninja doit réfléchir avant d'agir. Que comptes-tu faire ? »",choices:[
+{text:"« Observer avant d'attaquer. »",effect:()=>changeRelation("Kakashi",8)},
+{text:"« Frapper immédiatement. »",effect:()=>changeRelation("Kakashi",-3)},
+{text:"« Ça dépend de la situation. »",effect:()=>changeRelation("Kakashi",5)}]};
+else d={character,text:`${character} te parle de ton parcours.`,choices:[
+{text:"Être amical.",effect:()=>changeRelation(character,6)},{text:"Rester neutre.",effect:()=>{}},{text:"Provoquer.",effect:()=>changeRelation(character,-6)}]};
+game.dialogue=d;render();
+}
+
+function chooseDialogue(i){
+if(!game.dialogue)return;const c=game.dialogue.choices[i];if(!c)return;c.effect();
+addEvent("🗣️ Conversation",`${game.dialogue.character} et ${playerName()} ont parlé.`);game.dialogue=null;save();render();
+}
+
+function rivalFight(){
+const opponent=pick(["Naruto","Sasuke","Gaara","Kakashi"]);
+startRivalry(opponent);
+const my=game.stats.strength+game.stats.speed+game.stats.ninjutsu+game.stats.taijutsu;
+const enemy=(CHARACTERS[opponent]?.power||random(120,300))*4;
+game.legacy.battles++;
+if(my>=enemy||chance(25)){game.legacy.victories++;changeRelation(opponent,-2);addEvent("⚔️ Victoire",`${playerName()} remporte son duel contre ${opponent}.`)}
+else{changeRelation(opponent,-5);addEvent("💥 Défaite",`${playerName()} perd son duel contre ${opponent}.`);game.stats.reputation=Math.max(0,game.stats.reputation-2)}
+}
+
+function mission(){
+const rank=game.player.rank||"Étudiant";
+const difficulty=rank==="Étudiant"?20:rank==="Genin"?35:rank==="Chūnin"?55:rank==="Jōnin"?75:90;
+const success=game.stats.ninjutsu+game.stats.taijutsu+game.stats.intelligence+random(0,80)>difficulty*3;
+game.legacy.missions++;
+if(success){game.stats.reputation+=random(2,6);addEvent("✅ Mission réussie",`${playerName()} accomplit une mission de rang ${rank}.`)}
+else{addEvent("⚠️ Mission difficile","La mission tourne mal et tu rentres blessé.");game.stats.stamina=Math.max(1,game.stats.stamina-5);if(chance(1))die("mission")}
+}
+
+function criminalEvent(){
+if(game.village==="Déserteur")return;
+const crime=pick(["Voler un parchemin interdit","Attaquer un ninja","Espionner le village","Trahir une mission"]);
+game.crimes.push({age:game.age,crime});game.stats.wanted+=random(5,15);
+addEvent("🚨 CRIME",`${crime}. Ton niveau de recherche augmente.`);
+if(game.stats.wanted>50){game.village="Déserteur";addEvent("🏴 Désertion","Tu es désormais considéré comme un ninja recherché.")}
+}
+
+function checkMajorEvents(){
+if(game.age>=13&&!game.timeline.war){game.timeline.war=true;game.timeline.majorEvents.push("Grande guerre ninja");addEvent("⚔️ GRANDE GUERRE","Le monde shinobi entre dans une période de conflit.")}
+if(game.age>=16&&!game.timeline.akatsuki){game.timeline.akatsuki=true;game.timeline.majorEvents.push("Akatsuki");addEvent("☁️ AKATSUKI","Une organisation criminelle devient une menace mondiale.")}
+if(game.age>=25&&!game.timeline.shinju){game.timeline.shinju=true;game.timeline.majorEvents.push("Shinju");addEvent("🌳 SHINJU","Une nouvelle menace apparaît dans l'ère Boruto.")}
+}
+
+function worldSimulation(){
+Object.keys(CHARACTERS).forEach(n=>{if(chance(10))CHARACTERS[n].power=Math.max(1,CHARACTERS[n].power+(chance(60)?random(1,5):-random(1,3)))});
+if(chance(10))addEvent("🌍 Monde shinobi",pick(["Une mission importante est confiée à une autre équipe.","Un village renforce ses défenses.","Un nouveau ninja commence à se faire remarquer.","Des tensions apparaissent entre deux villages.","Une équipe disparaît pendant une mission."]));
+}
+
+function familySimulation(){
+if(game.familyData.parentsAlive&&chance(3)){game.familyData.parentsAlive=false;addEvent("🕊️ Famille","Un événement familial bouleverse ta vie.")}
+if(game.age>=20&&!game.familyData.spouse&&chance(5)){game.familyData.spouse={name:randomPersonName(),age:game.age};addEvent("❤️ Vie personnelle",`Tu rencontres ${game.familyData.spouse.name}.`)}
+if(game.familyData.spouse&&game.age>=22&&chance(4)){const c={id:uid("child"),name:randomPersonName(),gender:pick(["Garçon","Fille"]),age:0,personality:pick(["Courageux","Calme","Ambitieux","Impulsif","Intelligent"])};game.familyData.children.push(c);addEvent("👶 Naissance",`${c.name} est né(e).`)}
+}
+function randomPersonName(){return pick(["Aiko","Ren","Mika","Ken","Yuna","Haru","Sora","Akira"])}
+function recoverStats(){game.stats.stamina=Math.min(100,game.stats.stamina+random(2,7));game.stats.chakra=Math.min(100,game.stats.chakra+random(1,4))}
+
+function die(reason){
+if(!game.alive)return;game.alive=false;game.legacy.titles.push("Mort : "+reason);addEvent("💀 FIN DE VIE",`${playerName()} meurt à ${game.age} ans : ${reason}.`);save();render();
+}
+function checkRandomEvent(){
+if(!chance(18))return;
+pick([
+()=>{addEvent("🥋 Entraînement imprévu","Un ninja expérimenté t'observe et te donne un conseil.");game.stats.intelligence+=2},
+()=>{addEvent("🤝 Rencontre","Tu rencontres un jeune ninja prometteur.");game.social.followers+=random(5,50)},
+()=>{addEvent("⚠️ Danger","Une situation dangereuse apparaît pendant ta journée.");if(chance(2))die("accident")},
+()=>{addEvent("📜 Parchemin","Tu trouves un ancien parchemin d'entraînement.");game.stats.ninjutsu+=random(1,5)}
+])();
+}
+function addEvent(title,text){game.events.unshift({id:uid("event"),age:game.age,title,text});game.events=game.events.slice(0,150)}
+
+function showPage(p){game.ui.page=p;save();render()}
+function render(){
+if(!game)return;
+document.getElementById("headerName").textContent=playerName();
+document.getElementById("headerVillage").textContent=game.village+" • "+(game.player.rank||"Étudiant");
+document.getElementById("headerAge").textContent=game.age+" ans";document.getElementById("headerYear").textContent=game.year;
+if(game.ui.page==="home")renderHome();if(game.ui.page==="choices")renderChoices();if(game.ui.page==="relations")renderRelations();
+if(game.ui.page==="world")renderWorld();if(game.ui.page==="more")renderMore();
+}
+
+function renderHome(){
+document.getElementById("content").innerHTML=`
+<div class="card center"><h2>🍥 ${esc(playerName())}</h2><span class="badge">${esc(game.clan)}</span><span class="badge">${esc(game.village)}</span><span class="badge">${esc(game.era)}</span></div>
+<div class="card"><div class="grid3"><div class="stat"><b>${game.age}</b>Âge</div><div class="stat"><b>${game.actions}/5</b>Actions</div><div class="stat"><b>${game.stats.reputation}</b>Réputation</div></div></div>
+<div class="card"><h3>👁️ Pouvoirs</h3>
+${game.clan==="Uchiha"?`<div class="sharingan">${game.abilities.mangekyo?"👁️ Mangekyō":game.abilities.sharingan>0?"👁️ "+game.abilities.sharingan+" tomoe":"⚫ Aucun Sharingan"}</div>`:
+game.clan==="Hyūga"?`<p>${game.abilities.byakugan?"👁️ Byakugan éveillé":"⚫ Byakugan non éveillé"}</p>`:"<p>Aucun dōjutsu héréditaire.</p>"}</div>
+<div class="card"><h3>📊 Statistiques</h3>
+${Object.entries(game.stats).filter(([k])=>k!=="wanted").map(([k,v])=>`<p>${k.toUpperCase()} : ${v}</p><div class="progress"><span style="width:${Math.min(100,v)}%"></span></div>`).join("")}</div>
+<div class="card"><h3>📜 Derniers événements</h3><div class="log">${game.events.slice(0,8).map(e=>`<div class="event"><b>${esc(e.title)}</b><div class="small">${e.age} ans</div><p>${esc(e.text)}</p></div>`).join("")}</div></div>
+${!game.alive?`<div class="card death center"><h2>💀 PERSONNAGE DÉCÉDÉ</h2><p>Ta vie shinobi est terminée.</p><button onclick="showPage('more')">Voir ton héritage</button></div>`:""}`;
+}
+
+function renderChoices(){
+if(!game.alive){document.getElementById("content").innerHTML=`<div class="card death center"><h2>💀 Fin de vie</h2><p>Tu ne peux plus effectuer d'actions.</p></div>`;return}
+const cs=getChoices();
+document.getElementById("content").innerHTML=`
+<div class="card"><h2>🎯 Tes choix</h2><p>${game.actions}/5 actions utilisées.</p><p class="small">Après 5 choix, une nouvelle année commence.</p></div>
+<div class="card">${cs.map((c,i)=>`<button class="choice" onclick="chooseAction(${i})"><b>${esc(c.title)}</b><br><span class="small">${esc(c.text)}</span></button>`).join("")}</div>
+${game.dialogue?renderDialogueHTML():""}`;
+}
+function renderDialogueHTML(){const d=game.dialogue;return`<div class="card dialogue"><div class="dialogueName">${esc(d.character)}</div><p>${esc(d.text)}</p><br>${d.choices.map((c,i)=>`<button class="choice" onclick="chooseDialogue(${i})">${esc(c.text)}</button>`).join("")}</div>`}
+
+function renderRelations(){
+document.getElementById("content").innerHTML=`
+<div class="card"><h2>❤️ Relations</h2>
+${Object.entries(game.relations).map(([n,v])=>`<div class="relation"><b>${esc(n)}</b><span style="float:right">${v}%</span><div class="progress"><span style="width:${v}%"></span></div><button onclick="startDialogue('${n}')">🗣️ Parler</button></div>`).join("")}</div>
+<div class="card"><h3>⚔️ Rivaux</h3>${game.rivals.length?game.rivals.map(r=>`<p>⚔️ ${esc(r)}</p>`).join(""):"<p>Aucun rival majeur.</p>"}</div>
+<div class="card"><h3>👥 Amis</h3>${game.friends.length?game.friends.map(r=>`<p>❤️ ${esc(r)}</p>`).join(""):"<p>Tu n'as pas encore d'ami proche.</p>"}</div>`;
+}
+
+function renderWorld(){
+document.getElementById("content").innerHTML=`
+<div class="card"><h2>🌍 Monde shinobi</h2><p>Ère : <b>${esc(game.era)}</b></p><p>Village : <b>${esc(game.village)}</b></p><p>Rang : <b>${esc(game.player.rank||"Étudiant")}</b></p></div>
+<div class="card"><h3>📜 Histoire mondiale</h3>${game.timeline.majorEvents.length?game.timeline.majorEvents.map(e=>`<div class="event">${esc(e)}</div>`).join(""):"<p>Les grands événements ne sont pas encore arrivés.</p>"}</div>
+<div class="card"><h3>☁️ Akatsuki</h3><p>${game.timeline.akatsuki?"⚠️ L'organisation agit dans le monde.":"L'Akatsuki n'est pas encore devenue une menace majeure."}</p></div>
+<div class="card"><h3>🌳 Shinju</h3><p>${game.timeline.shinju?"🚨 Les Shinju représentent désormais une menace.":"Cette menace appartient encore au futur."}</p></div>`;
+}
+
+function renderMore(){
+document.getElementById("content").innerHTML=`
+<div class="card"><h2>☰ Menu</h2><button class="choice" onclick="save()">💾 Sauvegarder</button><button class="choice" onclick="showPage('home')">📊 Profil</button><button class="choice" onclick="showPage('world')">🌍 Timeline</button><button class="choice danger" onclick="deleteSave()">🗑️ Supprimer la partie</button></div>
+<div class="card"><h2>🏆 Héritage</h2><p>⚔️ Combats : ${game.legacy.battles}</p><p>🏆 Victoires : ${game.legacy.victories}</p><p>📜 Missions : ${game.legacy.missions}</p><p>💀 Éliminations : ${game.legacy.kills}</p><p>🚨 Niveau recherché : ${game.stats.wanted}</p></div>
+<div class="card"><h2>👨‍👩‍👧 Famille</h2><p>Parents : ${game.familyData.parentsAlive?"Vivants":"Décédés"}</p><p>Frères/sœurs : ${game.familyData.siblings}</p><p>Conjoint : ${game.familyData.spouse?esc(game.familyData.spouse.name):"Aucun"}</p><h3>Enfants</h3>${game.familyData.children.length?game.familyData.children.map(c=>`<div class="legacy"><b>${esc(c.name)}</b><br>${c.gender}<br>Personnalité : ${esc(c.personality)}</div>`).join(""):"<p>Aucun enfant.</p>"}</div>`;
+}
+
+function save(){if(!game)return;try{localStorage.setItem("narutoShinobiDestiny",JSON.stringify(game))}catch(e){console.error(e)}}
+function load(){
+try{const d=localStorage.getItem("narutoShinobiDestiny");if(!d)return false;const p=JSON.parse(d);
+if(!p||!p.player||!p.stats||!p.relations)return false;game=p;
+game.actions=Number.isFinite(game.actions)?game.actions:0;game.events=Array.isArray(game.events)?game.events:[];game.choices=Array.isArray(game.choices)?game.choices:[];
+return true}catch(e){console.error(e);return false}
+}
+function deleteSave(){if(confirm("Supprimer définitivement cette vie shinobi ?")){localStorage.removeItem("narutoShinobiDestiny");location.reload()}}
+setInterval(()=>{if(game)save()},5000);
+window.addEventListener("load",()=>{if(load()){document.getElementById("creation").classList.add("hidden");document.getElementById("game").classList.remove("hidden");render()}});
+window.addEventListener("error",()=>{if(game)save()});
+</script>
+</body>
+</html>
